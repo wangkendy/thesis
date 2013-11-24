@@ -1,6 +1,8 @@
 #include "common.h"
+#include <strings.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <netinet/in.h>
 
 int open_listenfd(int port)
 {
@@ -9,6 +11,11 @@ int open_listenfd(int port)
 
     /* Create a socket descriptor */
     if ((listenfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+        return -1;
+
+    /* Eliminates "Address already in use" error from bind */
+    if (setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR,
+                (const void*)&optval, sizeof(int)) < 0)
         return -1;
 
     /* listenfd will be an end point for all requests to port
