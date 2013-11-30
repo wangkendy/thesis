@@ -30,6 +30,7 @@ class EchoClient(protocol.Protocol):
             for num in self.factory.time_elapse:
                 total += num
             print "average service time:", total / CLIENTCOUNT
+            reactor.stop()
 #self.transport.loseConnection()
 
 class EchoFactory(protocol.ClientFactory):
@@ -45,8 +46,8 @@ class EchoFactory(protocol.ClientFactory):
         print reason
 #reactor.stop()
 
-    def clientConnectionLost(self, connector, reason):
-        print "Connection lost."
+#def clientConnectionLost(self, connector, reason):
+#       print "Connection lost."
 #reactor.stop()
 
 def usage():
