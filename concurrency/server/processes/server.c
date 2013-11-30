@@ -6,8 +6,6 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 
-#define BUF_SIZE 8192
-
 void sigchld_handler(int sig)
 {
     /* Since SIGCHLD signals are blocked while the SIGCHLD handler is executing,
@@ -18,27 +16,6 @@ void sigchld_handler(int sig)
         ;
     return;
 }
-
-
-int echo(int connfd)
-{
-    unsigned char buf[BUF_SIZE];
-    int nbyte, i;
-    for (;;) {
-        nbyte = read(connfd, buf, BUF_SIZE);
-        if (nbyte == 0) {
-            printf("*** Disconnected.\n");
-            close(connfd);
-            exit(0);
-        }
-        write(connfd, buf, nbyte);
-        for (i = 0; i < nbyte; i++)
-            printf("%c", buf[i]);
-        fflush(stdout);
-    }
-    return 0;
-}
-
 int main(int argc, char **argv)
 {
     int listenfd, connfd, port;
