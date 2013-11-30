@@ -1,4 +1,6 @@
 #include "common.h"
+#include <stdio.h>
+#include <strings.h>
 #include <strings.h>
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -31,4 +33,22 @@ int open_listenfd(int port)
     if (listen(listenfd, LISTENQ) < 0)
         return -1;
     return listenfd;
+}
+
+int echo(int connfd)
+{
+    unsigned char buf[BUF_SIZE];
+    int nbyte, i;
+    for (;;) {
+        nbyte = read(connfd, buf, BUF_SIZE);
+        if (nbyte == 0) {
+            printf("*** Disconnected.\n");
+            break;
+        }
+        write(connfd, buf, nbyte);
+        for (i = 0; i < nbyte; i++)
+            printf("%c", buf[i]);
+        fflush(stdout);
+    }
+    return 0;
 }
