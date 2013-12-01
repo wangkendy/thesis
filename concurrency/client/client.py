@@ -24,7 +24,7 @@ class EchoClient(protocol.Protocol):
         time_send = int(data)
         time_elapse = time_now - time_send
         self.factory.time_elapse.append(time_elapse)
-        print "time slapse:", (time_now - time_send)
+        print "time elapse:", (time_now - time_send)
         if len(self.factory.time_elapse) == CLIENTCOUNT:
             total = 0
             for num in self.factory.time_elapse:
