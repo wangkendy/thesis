@@ -11,7 +11,7 @@ class EchoClient(protocol.Protocol):
         self.factory = factory
 
     def connectionMade(self):
-        print "connectionMade"
+#print "connectionMade"
         self.factory.connectedProtocols.append(self)
         if len(self.factory.connectedProtocols) == CLIENTCOUNT:
             for protocol in self.factory.connectedProtocols:

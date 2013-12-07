@@ -15,7 +15,18 @@ int main(int argc, char **argv)
     socklen_t clientlen = sizeof(struct sockaddr_in);
     struct sockaddr_in client_addr;
     pthread_t tid;
+    pthread_attr_t attr;
 
+    pthread_attr_init(&attr);
+    //pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+    unsigned int size = 0;
+    //pthread_attr_getstacksize(&attr,&size);
+    //printf("stack size :%d\n",size);
+    size = 1024 * 1024;
+    //pthread_attr_setstacksize(&attr,size);
+    pthread_attr_getstacksize(&attr,&size);
+    printf("stack size :%d\n",size);
+    return 0;
     if (argc != 2) {
         fprintf(stderr, "usage: %s <port>\n", argv[0]);
         exit(0);

@@ -46,9 +46,11 @@ int echo(int connfd)
             break;
         }
         write(connfd, buf, nbyte);
+        /*
         for (i = 0; i < nbyte; i++)
             printf("%c", buf[i]);
         fflush(stdout);
+        */
     }
     return 0;
 }
