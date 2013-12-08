@@ -23,10 +23,10 @@ int main(int argc, char **argv)
     //pthread_attr_getstacksize(&attr,&size);
     //printf("stack size :%d\n",size);
     size = 1024 * 1024;
-    //pthread_attr_setstacksize(&attr,size);
+    pthread_attr_setstacksize(&attr,size);
     pthread_attr_getstacksize(&attr,&size);
     printf("stack size :%d\n",size);
-    return 0;
+    
     if (argc != 2) {
         fprintf(stderr, "usage: %s <port>\n", argv[0]);
         exit(0);
@@ -37,7 +37,7 @@ int main(int argc, char **argv)
     while (1) {
         connfdp = malloc(sizeof(int));
         *connfdp = accept(listenfd, (struct sockaddr*)&client_addr, &clientlen);
-        pthread_create(&tid, NULL, service, connfdp);
+        pthread_create(&tid, &attr, service, connfdp);
     }
 }
 
