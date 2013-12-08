@@ -19,18 +19,19 @@ class EchoClient(protocol.Protocol):
 #self.transport.write(str(123456))
 
     def dataReceived(self, data):
-        print "Server said:", data,
+        print "Server said:", data
         time_now = int(time.time() * 1000000)
-        time_send = int(data)
-        time_elapse = time_now - time_send
-        self.factory.time_elapse.append(time_elapse)
-        print "time elapse:", (time_now - time_send)
-        if len(self.factory.time_elapse) == CLIENTCOUNT:
-            total = 0
-            for num in self.factory.time_elapse:
-                total += num
-            print "average service time:", total / CLIENTCOUNT
-            reactor.stop()
+        self.transport.write(str(time_now))
+#time_send = int(data)
+#time_elapse = time_now - time_send
+#self.factory.time_elapse.append(time_elapse)
+#print "time elapse:", (time_now - time_send)
+#if len(self.factory.time_elapse) == CLIENTCOUNT:
+#total = 0
+#for num in self.factory.time_elapse:
+#total += num
+#print "average service time:", total / CLIENTCOUNT
+#reactor.stop()
 #self.transport.loseConnection()
 
 class EchoFactory(protocol.ClientFactory):
