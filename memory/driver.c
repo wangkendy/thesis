@@ -3,16 +3,24 @@
 #include <stdlib.h>
 #include <sys/time.h>
 
-#define OBJECT_SIZE 97
-#define TEST_COUNT 2000
+//#define OBJECT_SIZE 800
+#define TEST_COUNT 100
 
-int main()
+int main(int argc, char *argv[])
 {
     int i;
+    int OBJECT_SIZE = 0;
     void *ptr_arr[TEST_COUNT] = {NULL};
     struct timeval tv;
     double sec1, sec2;
     double sec3, sec4;
+
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s <object_isze>\n", argv[0]);
+        exit(1);
+    }
+    OBJECT_SIZE = atoi(argv[1]);
+
     mem_init(OBJECT_SIZE);
    
     printf("hello world");

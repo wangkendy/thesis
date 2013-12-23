@@ -2,7 +2,7 @@
 #define __MEM_WXF__
 
 #include <stddef.h>
-#define MEM_SIZE 100*1024*1024   //10M
+#define MEM_SIZE 10*1024*1024   //10M
 
 struct Slab {
     void *s_block;
