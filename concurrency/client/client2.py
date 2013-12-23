@@ -13,17 +13,23 @@ class EchoClient(protocol.Protocol):
 
     def connectionMade(self):
         print "connectionMade"
-        self.transport.write(str(int(time.time() * 1000000)))
+        self.transport.write("Hello")
+        #self.transport.write(str(int(time.time() * 1000000)))
 #self.transport.write(str(123456))
 
     def dataReceived(self, data):
         print "Server said:", data
-        time_now = int(time.time() * 1000000)
-        self.transport.write(str(time_now))
-        time_send = int(data)
-        time_elapse = time_now - time_send
-        self.time_elapse.append(time_elapse)
-        print "time elapse:", (time_now - time_send)
+        if data != "Hello":
+            time_now = int(time.time() * 1000000)
+            self.transport.write(str(time_now))
+            time_send = int(data)
+            time_elapse = time_now - time_send
+            self.time_elapse.append(time_elapse)
+            print "time elapse:", (time_now - time_send)
+        else:
+            time_now = int(time.time() * 1000000)
+            self.transport.write(str(time_now))
+
         if len(self.time_elapse) == TESTCOUNT:
             total = 0
             for num in self.time_elapse:
